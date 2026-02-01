@@ -9,6 +9,38 @@
             rel="stylesheet"
         />
         <style>
+            .main-nav {
+                background-color: #1e90ff;
+                padding: 0.75rem 1rem;
+                text-align: center;
+                margin-bottom: 2rem;
+                border-radius: 6px;
+            }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: inline-flex;
+                gap: 1.5rem;
+            }
+
+            .main-nav a {
+                color: white;
+                font-weight: 600;
+                text-decoration: none;
+                font-size: 1.1rem;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+            .main-nav a:hover,
+            .main-nav a:focus {
+                background-color: #005fbb;
+                outline: none;
+            }
+
             /* Reset & base */
             * {
                 box-sizing: border-box;
@@ -138,8 +170,19 @@
     <body>
         <header>
             <h1>adde9708</h1>
-            <p>Developer & IPFS Enthusiast</p>
+            <p>Developer & Tech Enthusiast</p>
         </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Portfolio</a></li>
+                <li>
+                    <a href="/ipfs-helper/">IPFS Helper</a>
+                </li>
+                <li><a href="/rspress-docs/">Docs</a></li>
+                <!-- Placeholder for future docs -->
+            </ul>
+        </nav>
 
         <main class="container">
             <section id="projects">
