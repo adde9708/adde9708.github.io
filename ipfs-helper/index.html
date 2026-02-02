@@ -155,9 +155,7 @@
 
                         const target = toGateway(decoded);
                         if (target) {
-                            setTimeout(() => {
-                                window.location.replace(target);
-                            }, 100);
+                            window.location.replace(target);
                         }
                     } catch (e) {
                         console.warn("Invalid URL parameter", e);
