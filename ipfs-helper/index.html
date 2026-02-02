@@ -4,10 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>IPFS / IPNS Gateway Helper</title>
+
         <link
             href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
             rel="stylesheet"
         />
+
         <style>
             body {
                 font-family: "Montserrat", sans-serif;
@@ -39,14 +41,7 @@
                 font-size: 1.1rem;
                 border: 2px solid #ccc;
                 border-radius: 6px;
-                transition: border-color 0.3s ease;
-                box-sizing: border-box;
                 margin-bottom: 1rem;
-            }
-            input[type="text"]:focus {
-                outline: none;
-                border-color: #1e90ff;
-                box-shadow: 0 0 6px #1e90ffaa;
             }
             button {
                 background-color: #1e90ff;
@@ -57,7 +52,6 @@
                 border: none;
                 border-radius: 6px;
                 cursor: pointer;
-                transition: background-color 0.3s ease;
                 width: 100%;
             }
             button:hover {
@@ -77,21 +71,23 @@
                 color: #1e90ff;
                 text-decoration: none;
             }
-            .footer a:hover {
-                text-decoration: underline;
-            }
         </style>
     </head>
+
     <body>
         <div class="container">
             <h1>IPFS / IPNS Gateway Helper</h1>
+
             <input
                 type="text"
                 id="ipfsInput"
                 placeholder="Enter ipfs:// or ipns:// URL"
             />
+
             <button id="goButton">Go</button>
+
             <div id="errorMsg" class="error" aria-live="polite"></div>
+
             <div class="footer">
                 Powered by
                 <a href="https://dweb.link" target="_blank" rel="noopener"
@@ -101,42 +97,73 @@
         </div>
 
         <script>
-            const GATEWAY = "https://dweb.link/";
+            (() => {
+                const GATEWAY = "https://dweb.link/";
 
-            function toGateway(url) {
-                if (url.startsWith("ipfs://")) {
-                    return GATEWAY + "ipfs/" + url.slice(7);
+                const input = document.getElementById("ipfsInput");
+                const button = document.getElementById("goButton");
+                const errorMsg = document.getElementById("errorMsg");
+
+                function toGateway(url) {
+                    if (url.startsWith("ipfs://")) {
+                        return GATEWAY + "ipfs/" + url.slice(7);
+                    }
+                    if (url.startsWith("ipns://")) {
+                        return GATEWAY + "ipns/" + url.slice(7);
+                    }
+                    return null;
                 }
-                if (url.startsWith("ipns://")) {
-                    return GATEWAY + "ipns/" + url.slice(7);
+
+                function redirect(url) {
+                    errorMsg.textContent = "";
+
+                    if (!url) {
+                        errorMsg.textContent = "URL cannot be empty.";
+                        return;
+                    }
+
+                    const target = toGateway(url);
+                    if (!target) {
+                        errorMsg.textContent =
+                            "Please enter a valid ipfs:// or ipns:// URL.";
+                        return;
+                    }
+
+                    window.location.href = target;
                 }
-                return null;
-            }
 
-            const params = new URLSearchParams(window.location.search);
-            const rawUrl = params.get("url");
+                // Button click
+                button.addEventListener("click", () => {
+                    redirect(input.value.trim());
+                });
 
-            if (rawUrl) {
-                try {
-                    const decoded = decodeURIComponent(rawUrl);
-                    const target = toGateway(decoded);
+                // Enter key
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        button.click();
+                    }
+                });
 
-                    // Update input field if you have one with id="input"
-                    const input = document.getElementById("input");
-                    if (input) {
+                // Auto-redirect support: ?url=ipfs://...
+                const params = new URLSearchParams(window.location.search);
+                const rawUrl = params.get("url");
+
+                if (rawUrl) {
+                    try {
+                        const decoded = decodeURIComponent(rawUrl);
                         input.value = decoded;
-                    }
 
-                    if (target) {
-                        // Add a small delay so user sees input update before redirect
-                        setTimeout(() => {
-                            window.location.replace(target);
-                        }, 100);
+                        const target = toGateway(decoded);
+                        if (target) {
+                            setTimeout(() => {
+                                window.location.replace(target);
+                            }, 100);
+                        }
+                    } catch (e) {
+                        console.warn("Invalid URL parameter", e);
                     }
-                } catch (e) {
-                    console.warn("Invalid URL parameter", e);
                 }
-            }
+            })();
         </script>
     </body>
 </html>
