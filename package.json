@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"rspress": "^1.47.1",
+		"rspress-plugin-mermaid": "^1.0.0"
+	}
+}

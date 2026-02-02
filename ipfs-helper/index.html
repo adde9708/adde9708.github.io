@@ -101,46 +101,42 @@
         </div>
 
         <script>
-            (function () {
-                const gateway = "https://dweb.link/";
-                const input = document.getElementById("ipfsInput");
-                const button = document.getElementById("goButton");
-                const errorMsg = document.getElementById("errorMsg");
+            const GATEWAY = "https://dweb.link/";
 
-                function redirectToGateway(url) {
-                    if (url.startsWith("ipfs://")) {
-                        location.href = gateway + "ipfs/" + url.slice(7);
-                    } else if (url.startsWith("ipns://")) {
-                        location.href = gateway + "ipns/" + url.slice(7);
-                    } else {
-                        errorMsg.textContent =
-                            "Please enter a valid ipfs:// or ipns:// URL.";
-                    }
+            function toGateway(url) {
+                if (url.startsWith("ipfs://")) {
+                    return GATEWAY + "ipfs/" + url.slice(7);
                 }
-
-                button.addEventListener("click", () => {
-                    errorMsg.textContent = "";
-                    const url = input.value.trim();
-                    if (!url) {
-                        errorMsg.textContent = "URL cannot be empty.";
-                        return;
-                    }
-                    redirectToGateway(url);
-                });
-
-                input.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") {
-                        button.click();
-                    }
-                });
-
-                // Optional: prefill input if URL param ?url=ipfs://...
-                const params = new URLSearchParams(location.search);
-                const presetUrl = params.get("url");
-                if (presetUrl) {
-                    input.value = presetUrl;
+                if (url.startsWith("ipns://")) {
+                    return GATEWAY + "ipns/" + url.slice(7);
                 }
-            })();
+                return null;
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const rawUrl = params.get("url");
+
+            if (rawUrl) {
+                try {
+                    const decoded = decodeURIComponent(rawUrl);
+                    const target = toGateway(decoded);
+
+                    // Update input field if you have one with id="input"
+                    const input = document.getElementById("input");
+                    if (input) {
+                        input.value = decoded;
+                    }
+
+                    if (target) {
+                        // Add a small delay so user sees input update before redirect
+                        setTimeout(() => {
+                            window.location.replace(target);
+                        }, 100);
+                    }
+                } catch (e) {
+                    console.warn("Invalid URL parameter", e);
+                }
+            }
         </script>
     </body>
 </html>
