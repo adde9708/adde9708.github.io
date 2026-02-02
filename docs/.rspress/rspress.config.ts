@@ -1,19 +1,22 @@
 // rspress.config.ts
+import { defineConfig } from "rspress/config";
+
+import mermaid from "rspress-plugin-mermaid";
 
 export default defineConfig({
   title: "SynCrypt",
   description:
     "Decentralized, end-to-end encrypted , privacy-preserving data synchronization, and a encrypted knowledge vault.",
 
-  base: "/SynCrypt/",
-  markdown: {
-    mermaid: true,
-  },
+  base: "/docs/",
+  plugins: [
+    mermaid({
+      mermaidConfig: {
+        theme: "dark",
+      },
+    }),
+  ],
   themeConfig: {
-    fontFamily: {
-      base: "IBM Plex Mono, monospace",
-      code: "IBM Plex Mono, monospace",
-    },
     sidebar: {
       "/": [
         {

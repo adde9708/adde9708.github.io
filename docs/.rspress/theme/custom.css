@@ -11,9 +11,14 @@
     --rp-c-brand-dark: #00cfa8;
 
     --rp-c-border: rgba(0, 245, 200, 0.25);
-
+    --rp-font-family-base: "IBM Plex Mono", monospace;
+    --rp-font-family-mono: "IBM Plex Mono", monospace;
     --syn-glow: 0 0 12px rgba(0, 245, 200, 0.45);
     --syn-glow-soft: 0 0 6px rgba(0, 245, 200, 0.25);
+}
+
+body {
+    font-family: var(--rp-font-family-base);
 }
 
 h1,
@@ -38,12 +43,10 @@ a {
     border: 1px solid rgba(0, 245, 200, 0.25);
 }
 
+code,
 pre {
-    background: #0f0f0f;
-    border: 1px solid rgba(0, 245, 200, 0.2);
-    box-shadow: var(--syn-glow-soft);
-}
-
-code {
+    font-family: var(--rp-font-family-mono);
     color: #7affa1;
+    background: #0f0f0f;
+    box-shadow: var(--syn-glow-soft);
 }
