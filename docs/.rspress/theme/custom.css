@@ -1,0 +1,49 @@
+:root {
+    --rp-c-bg: #0c0c0c;
+    --rp-c-bg-soft: #0f0f0f;
+    --rp-c-bg-mute: #141414;
+
+    --rp-c-text-1: #dadada;
+    --rp-c-text-2: rgba(218, 218, 218, 0.75);
+
+    --rp-c-brand: #00f5c8;
+    --rp-c-brand-light: #7affa1;
+    --rp-c-brand-dark: #00cfa8;
+
+    --rp-c-border: rgba(0, 245, 200, 0.25);
+
+    --syn-glow: 0 0 12px rgba(0, 245, 200, 0.45);
+    --syn-glow-soft: 0 0 6px rgba(0, 245, 200, 0.25);
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 0.04em;
+}
+
+a {
+    color: var(--rp-c-brand);
+    text-shadow: var(--syn-glow-soft);
+}
+
+.sidebar-item.is-active {
+    box-shadow: inset 2px 0 0 var(--rp-c-brand);
+}
+
+.card,
+.markdown-callout {
+    box-shadow: 0 0 18px rgba(0, 245, 200, 0.12);
+    border: 1px solid rgba(0, 245, 200, 0.25);
+}
+
+pre {
+    background: #0f0f0f;
+    border: 1px solid rgba(0, 245, 200, 0.2);
+    box-shadow: var(--syn-glow-soft);
+}
+
+code {
+    color: #7affa1;
+}
